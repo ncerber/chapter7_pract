@@ -17,13 +17,19 @@ public abstract class Machinerys {
         this.consumption = consumption;
     }
 
+    public int getFullFuelTank() {
+        return fullFuelTank;
+    }
 
+    public int getMaxLifting() {
+        return maxLifting;
+    }
 
     public int getConsumption() {
         return consumption;
     }
 
-    public void decFromFuelTank(int decValue){
+    protected void decFromFuelTank(int decValue){
         fuelTank-=decValue;
         if(fuelTank<0){
             fuelTank = 0;
@@ -53,7 +59,7 @@ public abstract class Machinerys {
             fuelTank -= calcNeededFuel(distance);
         } else {
             //Выведем сообщение, хотя по хорошему нужно бы сгенерировать исключение
-            System.out.println("Недостаточно топлива для совершения рейса");
+            System.out.println(name+": недостаточно топлива для совершения рейса, требуется топлива "+calcNeededFuel(distance)+", а есть в баке "+fuelTank);
         }
     }
 
@@ -70,7 +76,7 @@ public abstract class Machinerys {
         return res;
     }
 
-    public boolean checkDistance(int distance){
+    protected boolean checkDistance(int distance){
         int neededFuel = calcNeededFuel(distance);
         if(neededFuel<=fuelTank) {
             return true;
