@@ -2,18 +2,25 @@ public abstract class Machinerys {
     private String name;
 
     private int fuelTank;
-    private int fullFuelTank;
+    private final int fullFuelTank;
+    private int consumption;
 
     private int lifting;
-    private int maxLifting;
+    private final int maxLifting;
 
-
-    public Machinerys(String name, int fullFuelTank, int lifting) {
+    public Machinerys(String name, int fullFuelTank, int lifting, int consumption) {
         this.name = name;
         this.fullFuelTank = fullFuelTank;
         this.fuelTank = fullFuelTank;
         this.maxLifting = lifting;
         this.lifting = 0;
+        this.consumption = consumption;
+    }
+
+
+
+    public int getConsumption() {
+        return consumption;
     }
 
     public void decFromFuelTank(int decValue){
@@ -40,6 +47,48 @@ public abstract class Machinerys {
         lifting = maxLifting;
     }
 
-    public abstract void move(int[][] points);
+    public void move(int[][] points){
+        int distance = getDistance(points);
+        if(checkDistance(distance)){
+            fuelTank -= calcNeededFuel(distance);
+        } else {
+            //Выведем сообщение, хотя по хорошему нужно бы сгенерировать исключение
+            System.out.println("Недостаточно топлива для совершения рейса");
+        }
+    }
 
+    private int getDistance(int[][] points) {
+        int x1 = points[0][0];
+        int x2 = points[1][0];
+        int y1 = points[0][1];
+        int y2 = points[1][1];
+
+        int degreeX = (int) Math.pow((double) (x2-x1),2);
+        int degreeY = (int) Math.pow((double) (y2-y1),2);
+
+        int res = (int) Math.floor(Math.sqrt((double) (degreeX+degreeY)));
+        return res;
+    }
+
+    public boolean checkDistance(int distance){
+        int neededFuel = calcNeededFuel(distance);
+        if(neededFuel<=fuelTank) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Machinerys{" +
+                "name='" + name + '\'' +
+                ", fuelTank=" + fuelTank +
+                ", fullFuelTank=" + fullFuelTank +
+                ", consumption=" + consumption +
+                ", lifting=" + lifting +
+                ", maxLifting=" + maxLifting +
+                '}';
+    }
+
+    protected abstract int calcNeededFuel(int distance);
 }
