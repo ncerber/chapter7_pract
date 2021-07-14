@@ -22,6 +22,20 @@ public class MainLogic {
         altair.move(new int[][]{{1,1},{100,2700}});
         System.out.println(altair);
 
-//        Ship ship
+        System.out.println();
+
+        Ship ship = new Ship("Яхта Бонанвентур",2_000,1_000,20);
+        System.out.println(ship);
+        ship.loadingAll();
+        ship.move(new int[][]{{1,1},{100,27000}});
+        System.out.println(ship);
+
+        System.out.println();
+
+        Ship shipContainer = new Ship("Контейнеровоз Мечта окупанта",200_000,100_000,200);
+        System.out.println(shipContainer);
+        shipContainer.loadingAll();
+        shipContainer.move(new int[][]{{1,1},{100,27000}});
+        System.out.println(shipContainer);
     }
 }
